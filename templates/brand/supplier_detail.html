@@ -1,0 +1,54 @@
+{% extends 'base_brand.html' %}
+{% load static %}
+{% load crispy_forms_tags%}
+{% load bootstrap_pagination %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-6 pt-2">
+            <table class="table table-bordered table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for object in object_list %}
+                    <tr>
+                        <th scope="row"></th>
+                        <td>{{ object }}</td>
+                        <td></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6">
+            <h1>Parents</h1>
+            <form method="post">{% csrf_token %}
+                {{ form.as_p }}
+                <h2>children</h2>
+                {{ children.as_p }}
+                <input type="submit" value="Save">
+            </form>
+        </div>
+    </div>
+    {% if page_obj.has_next %}
+    <div class="row">
+
+        <div class="row">
+            <div class="col-12">
+                {% bootstrap_paginate page_obj range=5  show_first_last="true" %}
+            </div>
+        </div>
+
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+{% block vuejs %}
+<script src="{% static 'js/vue.js' %}"></script>
+<script src="{% static 'js/vue_my_test.js' %}"></script>
+{% endblock vuejs %}

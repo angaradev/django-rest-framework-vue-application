@@ -1,0 +1,38 @@
+body {
+    font-size: 0.8rem;
+}
+ul {
+    list-style: none;
+}
+.pagination {
+    justify-content: center;
+ }
+.bdarkgreen {
+    font-weight: bold;
+    color: #00b894;
+}
+.bdarkblue {
+    font-weight: bold;
+    color: #6c5ce7!important;
+}
+.breadcrumb {
+    margin-top: 10px;
+    background-color: #f8f9fa;
+}
+.hoverable-tr:hover {
+cursor: pointer;
+}
+.dropdown-item {
+    font-size: 0.7rem;
+}
+dl > dt {
+    color:#2d3436;
+}
+dl > dd {
+    color: #636e72;
+}
+
+input.search-form,
+input.search-form::-webkit-input-placeholder {
+    font-size: 0.8rem;
+}

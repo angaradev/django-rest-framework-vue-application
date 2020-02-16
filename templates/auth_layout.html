@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block style %}
+    <style>
+    .login-form-container {
+        width: 300px;
+        margin: auto;
+    }
+    .registration-form-container {
+        width: 400px;
+        margin: auto;
+    }
+    </style>
+    {% endblock style %}
+
+{% block content %}
+    <div class="auth-box text-center">
+        {% block auth %}
+        {% endblock %}
+    </div>
+{% endblock content %}

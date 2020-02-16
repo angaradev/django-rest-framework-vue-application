@@ -1,0 +1,57 @@
+{% extends 'base_brand.html' %}
+{% load static %}
+{% load bootstrap_pagination %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'main-view' %}">Главная</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Страница - {{ page_obj.number }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 pt-2">
+            <form action="." method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <button class="btn btn-outline-primary btn-sm">Save</button>
+            </form>
+        </div>
+        <div class="col-6">
+            <div id="app">
+                <dl class="row">
+                    <dt class="col-sm-3">Загрузка Брендов Ангара</dt>
+                    <dd class="col-sm-9">Для загрузки нужно создать CSV файл с брендами, которые хотим добавить в
+                        словарь.</dd>
+
+                    <dt class="col-sm-3">Формат</dt>
+                    <dd class="col-sm-9">
+                        <p>Файл должен содержать один столбец, разделитель ставить точка с запятой - ;.</p>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+
+        </div>
+    </div>
+    {% if page_obj.has_next %}
+    <div class="row">
+        <div class="col-12">
+            {% bootstrap_paginate page_obj range=5  show_first_last="true" %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+{% block vuejs %}
+<!-- <script src="{% static 'js/vue.js' %}"></script>
+<script src="{% static 'js/vue_my_test.js' %}"></script> -->
+{% endblock vuejs %}

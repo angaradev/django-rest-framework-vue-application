@@ -1,0 +1,75 @@
+{% extends 'base_brand.html' %}
+{% load static %}
+{% load bootstrap_pagination %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'main-view' %}">Главная</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Страница - {{ page_obj.number }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 pt-2">
+            <ul>
+                {% for object in object_list %}
+                <li>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th class="bdarkblue w-50"><a
+                                        href="{% url 'detailfunc-view' pk=object.id page=page_obj.number %}">{{ object.brand | upper }}</a>
+                                </th>
+                                <th class="w-50"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for sup_brand in object.brand_supplier.all %}
+                            <tr>
+                                <td class="w-50"></td>
+                                <td class="w-50">{{ sup_brand }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-6">
+            <div id="app">
+                <dl class="row">
+                    <dt class="col-sm-3">Словарь Брендов</dt>
+                    <dd class="col-sm-9">Здесь представлены все бренды, которые есть в нашем словаре. Бренды сортированы
+                        по алфавиту, внизу страницы есть пагинация. На странице выводится по 20 бредов.</dd>
+
+                    <dt class="col-sm-3">Редактирование</dt>
+                    <dd class="col-sm-9">
+                        <p>Для редактирования бренда кликните по его названию. На странице редактирования можно добавять
+                            поля поиска, а так же удалять поля.</p>
+                    </dd>
+                    <dt class="col-sm-3">Удаление</dt>
+                    <dd class="col-sm-9">
+                        <p>Для удаления бренда перейдите на страницу работы с брендами по поставщикам. Выбирете любого поставщика. Вставте название бренда в верхнее поле. Если бренд есть в словаре, то появится окно для редактирования и удаления бренда. Если нужно, то можно сделать удаление на этой странице.</p>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    {% if page_obj.has_next %}
+    <div class="row">
+        <div class="col-12">
+            {% bootstrap_paginate page_obj range=5  show_first_last="true" %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+{% block vuejs %}
+<!-- <script src="{% static 'js/vue.js' %}"></script>
+<script src="{% static 'js/vue_my_test.js' %}"></script> -->
+{% endblock vuejs %}
