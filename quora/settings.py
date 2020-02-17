@@ -12,7 +12,7 @@ SECRET_KEY = SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.0.24', 'dnobaka.ru', 'localhost']
 
 
 # Application definition
@@ -45,10 +45,10 @@ INSTALLED_APPS = [
     'bootstrap_pagination',
 
     'users',
-    'questions',
+    #'questions',
     'brands',
-    'programmers',
-    'music',
+    #'programmers',
+    #'music',
     'brand_dict',
 
 ]
