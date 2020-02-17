@@ -6,13 +6,15 @@ from rest_framework.views import APIView
 from django.views import View
 from django.shortcuts import redirect, render
 from django.db.models import Count, Q
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 from brands.api.serializers import BrandsDictSerializer
 from brands.models import BrandsDict, SuppliersBrands, AngPricesAll, AngSuppliers
 #from questions.api.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.permissions import IsAuthenticated
 
-
+@method_decorator(login_required, name='dispatch')
 class BrandsDictViewSet(viewsets.ModelViewSet):
     queryset = BrandsDict.objects.all()
     lookup_field = 'brand_name_2'
@@ -21,7 +23,7 @@ class BrandsDictViewSet(viewsets.ModelViewSet):
 
 # Inserting data from ang_prices_all to tmp table
 
-
+@method_decorator(login_required, name='dispatch')
 class MakeTmpTable(View):
     template_name = 'tmp.html'
 
@@ -32,20 +34,20 @@ class MakeTmpTable(View):
         
        
 
-        SuppliersBrands.objects.all().delete()
+        SuppliersBrands.objects.all().exclude(supplier=AngSuppliers.objects.get(id=1000)).delete()
 
         brand_list = [SuppliersBrands(** {'supplier': AngSuppliers.objects.get(id=q['supplier']),
-         "brand": q['brand'], "count": q['brand_count']}) for q in qs]
+         "brand": q['brand'].strip(), "count": q['brand_count']}) for q in qs if q['brand']]
 
         brand_list = []
         for q in qs:
-
-            try:
-                sup = AngSuppliers.objects.get(id=q['supplier'])
-                brand_list.append(SuppliersBrands(
-                    **{"supplier": sup, "brand": q['brand'], "count": q['brand_count']}))
-            except Exception as e:
-                print(e)
+            if q['brand']:
+                try:
+                    sup = AngSuppliers.objects.get(id=q['supplier'])
+                    brand_list.append(SuppliersBrands(
+                        **{"supplier": sup, "brand": q['brand'].strip(), "count": q['brand_count']}))
+                except Exception as e:
+                    print(e)
 
         SuppliersBrands.objects.bulk_create(brand_list)
 

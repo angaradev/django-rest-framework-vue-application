@@ -146,7 +146,7 @@ ChildFormset = inlineformset_factory(
 # Trying set formset for parent and child together
 # Seems to working variant
 
-
+@method_decorator(login_required, name='dispatch')
 class ParentCreateView(CreateView):
     model = BrandsDict
     fields = ["brand"]
@@ -197,7 +197,7 @@ class ParentCreateView(CreateView):
 # Adding upload brand list feature #
 ###############################################################
 
-
+@method_decorator(login_required, name='dispatch')
 class UploadBrandList(View):
     template_name = 'brand/add_brand_list.html'
     form_class = UploadFileForm
@@ -213,7 +213,7 @@ class UploadBrandList(View):
         with open(f, encoding='utf-8') as csvfile:
             angara = csv.reader(csvfile, delimiter=';')
             bulk = [SuppliersBrands(
-                **{'brand': i[0], 'supplier': AngSuppliers.objects.get(id=1000)}) for i in angara if i]
+                **{'brand': i[0].strip(), 'supplier': AngSuppliers.objects.get(id=1000)}) for i in angara if i]
             if SuppliersBrands.objects.bulk_create(bulk):
                 os.remove(f)
 
