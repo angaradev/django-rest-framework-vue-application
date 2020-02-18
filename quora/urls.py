@@ -22,11 +22,11 @@ from django.conf.urls.static import static
 
 from users.forms import CustomUserForm   
 from core.views import IndexTemplateView
+from django.views.generic import TemplateView
 
 urlpatterns = [
+    #path('', TemplateView.as_view(template_name='index1.html')),
     path('admin/', admin.site.urls),
-    path('', IndexTemplateView.as_view() ),
-
     path('account/register/', RegistrationView.as_view(
         form_class=CustomUserForm,
         success_url='/',

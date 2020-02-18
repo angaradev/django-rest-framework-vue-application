@@ -1,0 +1,23 @@
+{% extends 'base_brand.html' %}
+{% load static %}
+{# load render_bundle from webpack_loader #}
+{% block page_title %}In Production Mode{% endblock %}
+{% block style %}
+
+<link href="{% static 'bundle.css' %}" rel=preload as=style>
+<link href="{% static 'bundle.css' %}" rel=stylesheet>
+<link href="{% static 'bundle.js' %}" rel=preload as=script>
+{% endblock %}
+{% block content %}
+<noscript>
+    <strong>We're sorry but frontend doesn't work properly without JavaScript enabled. Please enable it to
+        continue.</strong>
+</noscript>
+
+<div id="app">
+    <h1>Index Production Django</h1>
+</div>
+{% endblock %}
+{% block vuejs %}
+<script src="{% static 'bundle.js' %}"></script>
+{% endblock vuejs %}

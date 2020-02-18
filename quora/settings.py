@@ -1,9 +1,10 @@
 import os
-from .local_settings import SECRET_KEY
+from .local_settings import *
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = SECRET_KEY
+VUE_DEV = VUE_DEV
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -68,7 +69,9 @@ ROOT_URLCONF = 'quora.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),
+        os.path.join(BASE_DIR, 'front/dist'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -149,6 +152,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     os.path.join(BASE_DIR, 'assets'),
+    os.path.join(BASE_DIR, 'front/dist'),
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -180,9 +184,9 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
 
-# WEBPACK_LOADER = {
-#     'DEFAULT': {
-#         'BUNDLE_DIR_NAME': 'dist/',
-#         'STATS_FILE': os.path.join(BASE_DIR, 'front', 'webpack-stats.json'),
-#     }
-# }
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'dist/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'front', 'webpack-stats.json'),
+    }
+}
